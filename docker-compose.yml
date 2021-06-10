@@ -3,9 +3,9 @@ version: "3.7"
 services:
   postgres:
     image: "postgres:11"
+    restart: always
     environment:
-      - POSTGRES_USER=postgresBlog
-      - POSTGRES_DB=postgresBlog
+      - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres_password
     ports:
       - "5432:5432"
@@ -18,15 +18,15 @@ services:
       - "5000:80"
     logging:
       driver: none
-  frontend:
-    build:
-      context: ./blog-frontend
-      dockerfile: Dockerfile.dev
-    volumes:
-      - /app/node_modules
-      - ./blog-frontend:/app
-    ports:
-      - "3000:3000"
+  # frontend:
+  #   build:
+  #     context: ./blog-frontend
+  #     dockerfile: Dockerfile.dev
+  #   volumes:
+  #     - /app/node_modules
+  #     - ./blog-frontend:/app
+  #   ports:
+  #     - "3000:3000"
   api:
     build:
       dockerfile: Dockerfile.dev
@@ -38,9 +38,9 @@ services:
       - "8000:3000"
     environment:
       - NODE_ENV=development
-      - PG_USERNAME=postgresBlog
-      - PG_HOST=postgresBlog
-      - PG_DATABASE=postgresBlog
+      - PG_USERNAME=postgres
+      - PG_HOST=postgres
+      - PG_DATABASE=postgres
       - PG_PASSWORD=postgres_password
       - PG_PORT=5432
       - JWT_SECRET=IL0veCoding
